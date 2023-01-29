@@ -14,3 +14,15 @@ func SumAll(arraysOfNumbers ...[]int) []int {
     }
     return sum
 }
+
+func SumAllTails(arraysOfNumbers ...[]int) []int {
+    var sum []int
+    for _, arrayOfNumbers := range arraysOfNumbers {
+       if len(arrayOfNumbers) > 1 {
+           sum = append(sum, Sum(arrayOfNumbers[1:]))
+       } else {
+           sum = append(sum, 0)
+       } 
+    }
+    return sum
+}
