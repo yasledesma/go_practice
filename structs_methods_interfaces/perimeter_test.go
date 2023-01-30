@@ -11,9 +11,9 @@ func TestPerimeter(t *testing.T) {
         shape Shape
         want float64
     } {
-        {"it should calculate the area of a triangle", Triangle{12, 6}, 36.0},
-        {"it should calculate the area of a rectangle", Rectangle{120, 50}, 120.00 * 50.00},
-        {"it should calculate the area of a circle", Circle{12}, 12 * 12 * math.Pi},
+        {name: "it should calculate the area of a triangle", shape: Triangle{Base: 12, Height: 6}, want: 36.0},
+        {name: "it should calculate the area of a rectangle", shape: Rectangle{Width: 120, Height: 50}, want: 120.00 * 50.00},
+        {name: "it should calculate the area of a circle", shape: Circle{Radius: 12}, want: 12 * 12 * math.Pi},
     }
 
     for _, testCase := range testCases {
