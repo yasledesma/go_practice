@@ -18,6 +18,19 @@ func TestDictionary(t *testing.T) {
 
         assertError(t, got, want)
     })
+
+    t.Run("it should add a word to our instance of Dictionary", func(t *testing.T) {
+        dictionary.Add("hello", "a formal greeting.")
+
+        got, err := dictionary.Search("hello")
+        want := "a formal greeting."
+
+        if err != nil {
+            t.Fatal("the word was not added to the dictionay: ", err)
+        }
+
+        assertEquals(t, got, want)
+    })
 }
 
 func assertEquals(t testing.TB, got, want string) {
