@@ -53,6 +53,15 @@ func TestDictionary(t *testing.T) {
 
        assertError(t, got, want) 
     })
+
+    t.Run("it should delete a word from our dictionary", func(t *testing.T) {
+        dictionary.Delete("hi")
+
+        _, got := dictionary.Search("hi")
+        want := ErrorWordNotFound
+
+        assertError(t, got, want)
+    })
 }
 
 func assertEquals(t testing.TB, got, want string) {
