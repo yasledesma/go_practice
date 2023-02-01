@@ -1,5 +1,17 @@
 package dictionary
 
-func Search(dictionary map[string]string, word string) string {
-    return dictionary[word]
+import "errors"
+
+type Dictionary map[string]string
+
+var ErrorWordNotFound = errors.New("word not found.")
+
+func (d Dictionary) Search(word string) (string, error) {
+    definition, found := d[word]
+
+    if !found {
+        return "", ErrorWordNotFound 
+    }
+
+    return definition, nil
 }
