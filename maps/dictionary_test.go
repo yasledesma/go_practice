@@ -38,6 +38,21 @@ func TestDictionary(t *testing.T) {
 
         assertError(t, got, want)
     })
+
+    t.Run("it should modify the definition of an existing word in the dictionary", func(t *testing.T) {
+        dictionary.Update("hi", "something that is said to attract someone's attention.")
+        got, _ := dictionary.Search("hi")
+        want := "something that is said to attract someone's attention." 
+
+        assertEquals(t, got, want)
+    })
+
+    t.Run("it should fail trying to modify the definition of an non-existent word", func(t *testing.T) {
+        got := dictionary.Update("wasap", "something that is said to attract someone's attention.")
+        want := ErrorCanNotUpdateWord 
+
+       assertError(t, got, want) 
+    })
 }
 
 func assertEquals(t testing.TB, got, want string) {
