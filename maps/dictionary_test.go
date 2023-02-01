@@ -31,6 +31,13 @@ func TestDictionary(t *testing.T) {
 
         assertEquals(t, got, want)
     })
+
+    t.Run("it should not modify the definition of a word that already exist our the dictionary", func(t *testing.T) {
+        got := dictionary.Add("hello", "an insult to the recipient's mother.")
+        want := ErrorWordAlreadyExists
+
+        assertError(t, got, want)
+    })
 }
 
 func assertEquals(t testing.TB, got, want string) {
