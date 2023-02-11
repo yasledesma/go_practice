@@ -1,22 +1,30 @@
 package racer
 
 import (
+	"errors"
 	"net/http"
 	"time"
 )
-
-func Racer(firstUrl, secondUrl string) string {
-	startFirstUrl := time.Now()
-	http.Get(firstUrl)
-	firstUrlDuration := time.Since(startFirstUrl)
-
-	startSecondUrl := time.Now()
-	http.Get(secondUrl)
-	secondUrlDuration := time.Since(startSecondUrl)
 	
-	if firstUrlDuration > secondUrlDuration {
-		return secondUrl
+func Racer(firstUrl, secondUrl string) (winner string, err error) {
+	select {
+	case <-ping(firstUrl):
+		return firstUrl, nil
+	case <-ping(secondUrl):
+		return secondUrl, nil
+	case <-time.After(10 * time.Second):
+	   return "", errors.New("connection timed out for both servers.")
 	}
-
-	return firstUrl
 }
+
+func ping(url string) chan struct{} {
+	ch := make(chan struct{})
+
+	go func() {
+		http.Get(url)
+		close(ch)
+	}()
+		
+	return ch
+}
+
