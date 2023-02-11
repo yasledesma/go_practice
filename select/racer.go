@@ -6,13 +6,13 @@ import (
 	"time"
 )
 	
-func Racer(firstUrl, secondUrl string) (winner string, err error) {
+func Racer(firstUrl, secondUrl string, timeout time.Duration) (winner string, err error) {
 	select {
 	case <-ping(firstUrl):
 		return firstUrl, nil
 	case <-ping(secondUrl):
 		return secondUrl, nil
-	case <-time.After(10 * time.Second):
+	case <-time.After(timeout * time.Second):
 	   return "", errors.New("connection timed out for both servers.")
 	}
 }
